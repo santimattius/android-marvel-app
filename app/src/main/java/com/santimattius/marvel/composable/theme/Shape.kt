@@ -1,4 +1,4 @@
-package com.santimattius.marvel.composable.ui.theme
+package com.santimattius.marvel.composable.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

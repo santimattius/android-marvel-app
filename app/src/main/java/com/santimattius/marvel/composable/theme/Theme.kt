@@ -1,4 +1,4 @@
-package com.santimattius.marvel.composable.ui.theme
+package com.santimattius.marvel.composable.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
