@@ -1,4 +1,4 @@
-package com.santimattius.marvel.composable.home.presentation.screen
+package com.santimattius.marvel.composable.home.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -18,6 +18,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.santimattius.marvel.composable.R
+import com.santimattius.marvel.composable.home.application.HomeViewModel
 import com.santimattius.marvel.composable.home.domain.Character
 import com.santimattius.marvel.composable.home.domain.Characters
 import kotlinx.coroutines.flow.Flow

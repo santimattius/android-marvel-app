@@ -5,9 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import com.santimattius.marvel.client.MarvelClientKoin
-import com.santimattius.marvel.composable.di.appModules
-import com.santimattius.marvel.composable.di.domainModules
-import com.santimattius.marvel.composable.di.infrastructureModules
+import com.santimattius.marvel.composable.di.*
 import com.santimattius.marvel.composable.theme.MarvelComposableTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -18,12 +16,9 @@ class MarvelApplication : Application() {
         startKoin {
             androidContext(this@MarvelApplication)
             modules(
-                listOf(
-                    MarvelClientKoin.modules,
-                    appModules,
-                    domainModules,
-                    infrastructureModules
-                )
+                MarvelClientKoin.modules +
+                        homeModules +
+                        detailModules
             )
         }
     }

@@ -3,14 +3,14 @@ package com.santimattius.marvel.client.internal
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-fun     generateHash(time: Long, privateKey: String, publicKey: String): String =
+private const val MD5 = "MD5"
+
+fun generateHash(time: Long, privateKey: String, publicKey: String): String =
     md5(time.toString() + privateKey + publicKey)
 
 private fun md5(stringToHash: String): String {
-    val md5 = "MD5"
-
-    try {
-        val digest = MessageDigest.getInstance(md5)
+    return try {
+        val digest = MessageDigest.getInstance(MD5)
         digest.update(stringToHash.toByteArray())
         val messageDigest = digest.digest()
         val hexString = StringBuilder()
@@ -21,11 +21,9 @@ private fun md5(stringToHash: String): String {
             }
             hexString.append(h)
         }
-        return hexString.toString()
-
+        hexString.toString()
     } catch (e: NoSuchAlgorithmException) {
         e.printStackTrace()
+        ""
     }
-
-    return ""
 }
