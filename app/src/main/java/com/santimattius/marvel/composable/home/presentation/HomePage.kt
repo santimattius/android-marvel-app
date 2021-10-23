@@ -35,13 +35,13 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeScreen(onClick: (Character) -> Unit) {
     val viewModel: HomeViewModel = getViewModel()
-    CharactersScreen(viewModel.characters, onClick)
+    HomeScreen(viewModel.characters, onClick)
 }
 
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
-fun CharactersScreen(data: Flow<Characters>, onClick: (Character) -> Unit) {
+fun HomeScreen(data: Flow<Characters>, onClick: (Character) -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -51,7 +51,9 @@ fun CharactersScreen(data: Flow<Characters>, onClick: (Character) -> Unit) {
     ) { padding ->
         val characters: LazyPagingItems<Character> = data.collectAsLazyPagingItems()
         val swipeRefreshState =
-            rememberSwipeRefreshState(isRefreshing = characters.loadState.refresh == LoadState.Loading)
+            rememberSwipeRefreshState(
+                isRefreshing = characters.loadState.refresh == LoadState.Loading
+            )
 
         SwipeRefresh(
             state = swipeRefreshState,

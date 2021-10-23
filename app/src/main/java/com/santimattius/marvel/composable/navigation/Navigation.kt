@@ -16,6 +16,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.santimattius.marvel.composable.detail.presentation.DetailScreen
 import com.santimattius.marvel.composable.home.presentation.HomeScreen
+import com.santimattius.marvel.composable.splash.SplashScreen
 
 
 @ExperimentalAnimationApi
@@ -28,9 +29,9 @@ fun Navigation() {
 
     AnimatedNavHost(
         navController = navController,
-        startDestination = NavigationItem.Characters.route
+        startDestination = NavigationItem.Splash.route,
     ) {
-        charactersNav(navController)
+        navDefinitions(navController)
     }
 }
 
@@ -38,17 +39,22 @@ fun Navigation() {
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
-private fun NavGraphBuilder.charactersNav(
+private fun NavGraphBuilder.navDefinitions(
     navController: NavController
 ) {
-    composable(NavigationItem.Characters) {
+    composable(NavigationItem.Splash) {
+        SplashScreen(navigate = {
+            navController.popBackStack()
+            navController.navigate(NavigationItem.Home.route)
+        })
+    }
+    composable(NavigationItem.Home) {
         HomeScreen(
             onClick = { character ->
                 navController.navigate(NavigationItem.CharacterDetail.createRoute(character.id))
             }
         )
     }
-
     composable(NavigationItem.CharacterDetail) {
         val id = it.findArg<Int>(NavArg.ItemId)
         DetailScreen(

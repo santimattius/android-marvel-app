@@ -7,7 +7,8 @@ sealed class NavigationItem(
     internal val baseRoute: String,
     private val navArgs: List<NavArg> = emptyList()
 ) {
-    object Characters : NavigationItem(baseRoute = "characters")
+    object Splash : NavigationItem(baseRoute = "splash")
+    object Home : NavigationItem(baseRoute = "home")
 
     object CharacterDetail : NavigationItem(
         baseRoute = "character/detail",
