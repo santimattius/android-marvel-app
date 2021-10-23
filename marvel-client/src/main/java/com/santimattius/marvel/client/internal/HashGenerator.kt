@@ -23,7 +23,6 @@ private fun md5(stringToHash: String): String {
         }
         hexString.toString()
     } catch (e: NoSuchAlgorithmException) {
-        e.printStackTrace()
         ""
     }
 }

@@ -21,6 +21,8 @@ private fun NetworkCharacter.asCharacter(): Character {
             get() = this@asCharacter.id
         override val name: String
             get() = this@asCharacter.name
+        override val description: String
+            get() = this@asCharacter.description
         override val thumbnail: String
             get() = this@asCharacter.thumbnail.asString()
         override val comics: List<Item>

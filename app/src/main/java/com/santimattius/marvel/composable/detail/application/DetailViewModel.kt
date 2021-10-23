@@ -8,7 +8,7 @@ import com.santimattius.marvel.composable.detail.domain.Character
 import com.santimattius.marvel.composable.detail.domain.FindCharacter
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val id: Long, private val findCharacter: FindCharacter) :
+class DetailViewModel(id: Long, private val findCharacter: FindCharacter) :
     ViewModel() {
     private val _state = MutableLiveData<DetailState>()
     val state: LiveData<DetailState>

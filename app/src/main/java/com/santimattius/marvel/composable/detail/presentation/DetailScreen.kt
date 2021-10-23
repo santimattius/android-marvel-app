@@ -8,17 +8,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.Collections
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,21 +32,26 @@ import org.koin.core.parameter.parametersOf
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
-fun CharacterDetailScreen(characterId: Int, onUpClick: () -> Unit) {
+fun DetailScreen(characterId: Int, onUpClick: () -> Unit) {
     val viewModel = getViewModel<DetailViewModel> { parametersOf(characterId) }
     val currentState: DetailState by viewModel.state.observeAsState(DetailState.Loading)
     when (currentState) {
         is DetailState.Complete -> {
-            CharacterDetailScreen((currentState as DetailState.Complete).data, onUpClick)
+            DetailScreen((currentState as DetailState.Complete).data, onUpClick)
         }
-        DetailState.Loading -> CircularProgressIndicator()
+        DetailState.Loading -> Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
     }
 }
 
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
-fun CharacterDetailScreen(character: Character, onUpClick: () -> Unit) {
+fun DetailScreen(character: Character, onUpClick: () -> Unit) {
     CharacterDetailScaffold(
         character = character,
         onUpClick = onUpClick
@@ -62,28 +64,27 @@ fun CharacterDetailScreen(character: Character, onUpClick: () -> Unit) {
             item {
                 Header(character)
             }
-            section(Icons.Default.Collections, R.string.series, character.series)
-            section(Icons.Default.Book, R.string.comics, character.comics)
-            section(Icons.Default.Bookmark, R.string.stories, character.stories)
+            section(R.string.series, character.series)
+            section(R.string.comics, character.comics)
+            section(R.string.stories, character.stories)
         }
     }
 }
 
 @ExperimentalMaterialApi
-private fun LazyListScope.section(icon: ImageVector, @StringRes name: Int, items: List<Item>) {
+private fun LazyListScope.section(@StringRes name: Int, items: List<Item>) {
     if (items.isEmpty()) return
 
     item {
         Text(
             text = stringResource(name),
             style = MaterialTheme.typography.h5,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.small))
         )
     }
     items(items) {
         ListItem(
-            icon = { Icon(icon, contentDescription = null) },
-            text = { Text(it.name) }
+            text = { Text(it.name, modifier = Modifier.padding(4.dp, 0.dp)) }
         )
     }
 }
@@ -103,21 +104,24 @@ private fun Header(character: Character) {
                 .background(Color.LightGray)
                 .aspectRatio(1f)
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.medium)))
         Text(
             text = character.name,
+            style = MaterialTheme.typography.subtitle1,
+            modifier = Modifier.padding(
+                dimensionResource(R.dimen.medium),
+                dimensionResource(R.dimen.none)
+            )
+        )
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.medium)))
+        Text(
+            text = character.description,
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp, 0.dp)
+                .padding(dimensionResource(R.dimen.medium), dimensionResource(R.dimen.none))
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = character.name,
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(16.dp, 0.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.medium)))
     }
 }

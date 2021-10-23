@@ -1,27 +1,32 @@
 package com.santimattius.marvel.composable.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
-import com.santimattius.marvel.composable.detail.presentation.CharacterDetailScreen
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.santimattius.marvel.composable.detail.presentation.DetailScreen
 import com.santimattius.marvel.composable.home.presentation.HomeScreen
 
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
 fun Navigation() {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
 
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = NavigationItem.Characters.route
     ) {
@@ -29,6 +34,7 @@ fun Navigation() {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
@@ -45,20 +51,28 @@ private fun NavGraphBuilder.charactersNav(
 
     composable(NavigationItem.CharacterDetail) {
         val id = it.findArg<Int>(NavArg.ItemId)
-        CharacterDetailScreen(
+        DetailScreen(
             characterId = id,
             onUpClick = { navController.popBackStack() }
         )
     }
 }
 
+@ExperimentalAnimationApi
 private fun NavGraphBuilder.composable(
     navItem: NavigationItem,
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable(
         route = navItem.route,
-        arguments = navItem.args
+        arguments = navItem.args,
+        enterTransition = { _, _ ->
+            // Let's make for a really long fade in
+            fadeIn(animationSpec = tween(1000))
+        },
+        exitTransition = { _, _ ->
+            fadeOut(animationSpec = tween(1000))
+        }
     ) {
         content(it)
     }

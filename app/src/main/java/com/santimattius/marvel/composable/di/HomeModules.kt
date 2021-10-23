@@ -9,11 +9,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private val homeAppModules = module {
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(getCharacters = get()) }
 }
 
 private val homeDomainModules = module {
-    factory { GetCharacters(get()) }
+    factory { GetCharacters(repository = get()) }
 }
 
 private val homeInfrastructureModules = module {

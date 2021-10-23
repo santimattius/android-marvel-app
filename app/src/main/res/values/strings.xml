@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Marvel Composable</string>
-    <string name="series">Serie</string>
+    <string name="series">Series</string>
     <string name="comics">Comics</string>
     <string name="stories">Stories</string>
+    <string name="icon_desc">Arrow Right</string>
 </resources>

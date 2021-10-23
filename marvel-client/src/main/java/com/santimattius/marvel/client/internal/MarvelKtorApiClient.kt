@@ -7,17 +7,17 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-internal class KtorMarvelApiClient(private val client: HttpClient) : MarvelApiClient {
+internal class MarvelKtorApiClient(private val client: HttpClient) : MarvelApiClient {
 
     override suspend fun getCharacters(offset: Long, limit: Long): ApiResponse {
         val urlBuilder =
-            URLBuilder("https://gateway.marvel.com/v1/public/characters?offset=$offset&limit=$limit")
+            URLBuilder(urlString = "https://gateway.marvel.com/v1/public/characters?offset=$offset&limit=$limit")
         return client.get(url = Url(urlBuilder))
     }
 
     override suspend fun findCharacter(id: Long): Character {
         val urlBuilder =
-            URLBuilder("https://gateway.marvel.com/v1/public/characters/$id")
+            URLBuilder(urlString = "https://gateway.marvel.com/v1/public/characters/$id")
         return client.get<ApiResponse>(url = Url(urlBuilder)).data.results.first()
     }
 }

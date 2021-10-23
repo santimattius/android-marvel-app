@@ -11,7 +11,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private val detailAppModules = module {
-    viewModel { (characterId: Long) -> DetailViewModel(characterId, get()) }
+    viewModel { (characterId: Long) -> DetailViewModel(id = characterId, findCharacter = get()) }
 }
 
 private val detailDomainModules = module {
@@ -19,7 +19,7 @@ private val detailDomainModules = module {
 }
 
 private val detailInfrastructureModules = module {
-    factory<CharacterRepository> { CharacterRepositoryImpl(get<CharacterDataSource>()) }
+    factory<CharacterRepository> { CharacterRepositoryImpl(characterDataSource = get<CharacterDataSource>()) }
     factory<CharacterDataSource> { CharacterRemoteDataSource(apiClient = get<MarvelApiClient>()) }
 }
 

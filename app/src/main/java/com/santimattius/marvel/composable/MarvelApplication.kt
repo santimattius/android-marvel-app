@@ -27,7 +27,6 @@ class MarvelApplication : Application() {
 @Composable
 fun MarvelApplication(content: @Composable () -> Unit) {
     MarvelComposableTheme {
-        // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
             content()
         }
