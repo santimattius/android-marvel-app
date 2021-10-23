@@ -26,5 +26,30 @@ Application that uses the Marvel API with Jetpack Compose and Kotlin Ecosystem. 
 - **Kotlin coroutines** and **Kotlion Flow**
   - https://kotlinlang.org/docs/reference/coroutines-overview.html
   - https://kotlinlang.org/docs/reference/coroutines/flow.html
+ 
+ ## Marvel API
+
+Marvel developers: https://developer.marvel.com/
+
+Add in the local.properties file the following variables **marvelPrivateKey** and **marvelPublicKey** with the keys obtained in the marvel api portal and then configure add the following code in the build.gradle of the marvel-client module:
+
+ ``` groovy
+ 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        ...
+
+        buildConfigField "String", "PRIVATE_KEY", localProperties['marvelPrivateKey']
+        buildConfigField "String", "PUBLIC_KEY", localProperties['marvelPublicKey']
+    }
+  ...
+ }
+    
+ ```
 
 
